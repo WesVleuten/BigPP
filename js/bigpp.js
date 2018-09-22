@@ -41,7 +41,7 @@ function getData() {
 }
 
 function getSongs(callback) {
-  for (let i = 1; i < 11; i++) {
+  for (let i = 1; i < 13; i++) {
     var url = $('form input.playerForm').val() + '&page=' + i.toString() + '&sort=1';
 
     $.get(url, function(data) {
@@ -55,12 +55,13 @@ function getSongs(callback) {
       var tbody = table.find("tbody");
       tbody.children().each(function() {
         var song = $(this).find("th.song div div a span.songTop.pp").text();
+        song = $.trim(song);
         var pp = parseFloat($(this).find("th.score span.scoreTop.ppValue").text());
 
         player[song] = pp;
       });
       count++;
-      if (count > 9) {
+      if (count > 11) {
         callback();
       }
     });
@@ -69,6 +70,7 @@ function getSongs(callback) {
 
 function organize() {
   $("#playerName").html(playerName);
+  console.log(player);
 
   for (let i = 0; i < songList.length; i++) {
     var song = songList[i];
@@ -126,10 +128,15 @@ function readData(allText) {
       song += "," + rows[i][j];
     }
     var songParts = song.split("-");
-    finalSong = songParts[songParts.length-1] + " -" + songParts[0];
+    finalSong = songParts[songParts.length-1] + " ";
+    for (let q = 0; q < songParts.length - 1; q++) {
+      finalSong += "-" + songParts[q];
+    }
     song = $.trim(finalSong);
     song += " " + rows[i][rows[i].length - 1];
     songs[song] = parseFloat(rows[i][rows[i].length - 2]);
     songList.push(song);
   }
+
+  console.log(songList);
 }
