@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="js/bigPP.js"></script>
+  <link rel="stylesheet" type="text/css" href="style.css" media="screen" />
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-126056527-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+
+    gtag('config', 'UA-126056527-1');
+  </script>
+</head>
+
+<body>
+  <center>
+    <h1>Beat Saber PP Enlargement</h1>
+    <h3>Find songs that make your PP bigger!</h3>
+    <div>
+      <h4 id="playerName">ScoreSaber Profile</h4>
+      <form>
+        <input type="text" class="playerForm" value="https://scoresaber.com/u/76561198813915738">
+          </form>
+
+        <button onclick="getData()"><h2>Compare!<h2></button>
+    </div>
+
+    <div id="loading">
+      <span>LOADING TOP 60 SCORES...</span>
+    </div>
+
+    <div id="playerscores">
+      <table class="playerdata">
+        <tr>
+          <th>
+          </th>
+          <th>
+          </th>
+          <th>
+          </th>
+          <th>
+          </th>
+          <th>
+          </th>
+        </tr>
+      </table>
+    </div>
+  </center>
+</body>
+
+</html>
