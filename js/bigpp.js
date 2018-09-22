@@ -13,7 +13,7 @@ $(document).ready(function() {
     type: "GET",
     url: "songs.csv",
     dataType: "text",
-    success: function(data) {console.log("TEST");}
+    success: function(data) {console.log("TEST!");}
   });
 
   $.ajaxPrefilter(function(options) {
