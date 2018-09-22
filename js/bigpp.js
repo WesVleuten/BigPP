@@ -1,5 +1,7 @@
 var player = {};
+var playerList = [];
 var songs = {};
+var songList = [];
 var url = "";
 var count = 0;
 var newHtml = "";
@@ -9,11 +11,15 @@ var count = 0;
 
 $(document).ready(function() {
   $("#loading").hide();
+  $("#playerscores").hide();
+
   $.ajax({
     type: "GET",
-    url: "songs.csv",
+    url: "https://raw.githubusercontent.com/DuoVR/BigPP/master/js/songs.csv",
     dataType: "text",
-    success: function(data) {console.log("TEST!");}
+    success: function(data) {
+      readData(data);
+    }
   });
 
   $.ajaxPrefilter(function(options) {
@@ -25,12 +31,11 @@ $(document).ready(function() {
 });
 
 function getData() {
-  player = {};
-  union = [];
-  finalUnion = [];
+  var player = {};
+  var playerList = [];
+  var songs = {};
   count = 0;
-  needPlayer1 = true;
-  needPlayer2 = true;
+  needPlayer = true;
   $("#loading").show();
   getSongs(organize);
 }
@@ -63,14 +68,68 @@ function getSongs(callback) {
 }
 
 function organize() {
-  console.log(player);
-  count++;
-  if (count > 1) {
-    $("#playerName").html(playerName);
-    calculate();
+  $("#playerName").html(playerName);
+
+  for (let i = 0; i < songList.length; i++) {
+    var song = songList[i];
+    var maxPP = songs[song];
+    var pp = player[song];
+    var diff = maxPP;
+
+    if (pp) {
+      diff = (maxPP - pp).toFixed(2);
+    } else {
+      pp = 0;
+    }
+
+    var songObj = {
+      "song": song,
+      "playerPP": pp.toFixed(2),
+      "maxPP": maxPP.toFixed(2),
+      "pp": diff
+    }
+
+    playerList.push(songObj);
   }
+
+  playerList.sort(function(a, b) {
+    return b.pp - a.pp
+  });
+
+  var tableHtml = $("table.playerdata tbody");
+  tableHtml.html("<tr><th style='width:40%'>Song Title</th><th style='width:20%'>Your PP</th><th style='width:20%'>Biggest PP</th><th style='width:20%'>+ PP</th>");
+
+  for (let x = 0; x < playerList.length; x++) {
+    var obj = playerList[x];
+    var newHtml = "<tr><th>";
+    newHtml += obj.song;
+    newHtml += "</th><th>";
+    newHtml += obj.playerPP.toString();
+    newHtml += "</th><th>";
+    newHtml += obj.maxPP.toString();
+    newHtml += "</th><th>";
+    newHtml += "+ " + obj.pp.toString();
+    newHtml += "</th></tr>"
+    tableHtml.append(newHtml);
+  }
+
+  $("#loading").hide();
+  $("#playerscores").show();
 }
 
-function calculate() {
-  console.log("CALCULATE");
+function readData(allText) {
+  var rows = allText.split(/\r\n|\n/);
+  for (let i = 0; i < 201; i++) {
+    rows[i] = rows[i].split(",");
+    var song = rows[i][0];
+    for (let j = 1; j < rows[i].length - 2; j++) {
+      song += "," + rows[i][j];
+    }
+    var songParts = song.split("-");
+    finalSong = songParts[songParts.length-1] + " -" + songParts[0];
+    song = $.trim(finalSong);
+    song += " " + rows[i][rows[i].length - 1];
+    songs[song] = parseFloat(rows[i][rows[i].length - 2]);
+    songList.push(song);
+  }
 }

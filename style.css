@@ -7,14 +7,15 @@
   padding: 12px;
   text-align: center;
   border-collapse: collapse;
-  width: 100%;
+  width: 65%;
+  border-collapse: collapse;
+  border-spacing: 0;
 }
 
 .playerdata th {
   border: 1px solid #ddd;
   padding: 12px;
   text-align: center;
-  border-collapse: collapse;
 }
 
 .forms {
