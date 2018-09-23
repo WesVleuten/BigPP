@@ -59,11 +59,6 @@ function getSongs(callback) {
         var pp = parseFloat($(this).find("th.score span.scoreTop.ppValue").text());
 
         player[song] = pp;
-
-        if (song.indexOf("Mystik") != -1) {
-          console.log(song);
-          console.log(player[song]);
-        }
       });
     }).done(function() {
       count++;
@@ -75,7 +70,6 @@ function getSongs(callback) {
 }
 
 function organize() {
-  console.log("ORGANIZE");
   var keys = Object.keys(player);
   var illness = "";
   var heaven = "";
@@ -185,6 +179,4 @@ function readData(allText) {
     songs[song] = parseFloat(rows[i][rows[i].length - 2]);
     songList.push(song);
   }
-
-  console.log(songList);
 }
