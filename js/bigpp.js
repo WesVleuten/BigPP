@@ -31,13 +31,14 @@ $(document).ready(function() {
 });
 
 function getData() {
-  var player = {};
-  var playerList = [];
-  var songs = {};
+  player = {};
+  playerList = [];
   count = 0;
   needPlayer = true;
   $("#loading").show();
   getSongs(organize);
+  var tableHtml = $("table.playerdata tbody");
+  tableHtml.html("");
 }
 
 function getSongs(callback) {
