@@ -59,9 +59,15 @@ function getSongs(callback) {
         var pp = parseFloat($(this).find("th.score span.scoreTop.ppValue").text());
 
         player[song] = pp;
+
+        if (song.indexOf("Mystik") != -1) {
+          console.log(song);
+          console.log(player[song]);
+        }
       });
+    }).done(function() {
       count++;
-      if (count > 11) {
+      if (count == 12) {
         callback();
       }
     });
@@ -69,17 +75,56 @@ function getSongs(callback) {
 }
 
 function organize() {
+  console.log("ORGANIZE");
+  var keys = Object.keys(player);
+  var illness = "";
+  var heaven = "";
+  var ultimate = "";
+  var happy = "";
+  for (let r = 0; r < keys.length; r++) {
+    key = keys[r];
+    if (key.indexOf("HE4VEN") != -1) {
+      heaven = key;
+    }
+    if (key.indexOf("iLLness") != -1) {
+      illness = key;
+    }
+    if (key.indexOf("Mystikmol - Ultimate Ascension") != -1) {
+      ultimate = key;
+    }
+    if (key.indexOf("Mystikmol - Happy Synthesizer") != -1) {
+      happy = key;
+    }
+  }
+
   $("#playerName").html(playerName);
-  console.log(player);
 
   for (let i = 0; i < songList.length; i++) {
     var song = songList[i];
+
     var maxPP = songs[song];
     var pp = player[song];
     var diff = maxPP;
 
+    if (song.indexOf("HE4VEN") != -1) {
+      song = heaven;
+      pp = player[song];
+    }
+    if (song.indexOf("iLLness") != -1) {
+      song = illness;
+      pp = player[song];
+    }
+    if (song.indexOf("Mystikmol - Ultimate Ascension") != -1) {
+      song = ultimate;
+      pp = player[song];
+    }
+    if (song.indexOf("Mystikmol - Happy Synthesizer") != -1) {
+      song = happy;
+      pp = player[song];
+    }
+
     if (pp) {
-      diff = (maxPP - pp).toFixed(2);
+      diff = maxPP - pp;
     } else {
       pp = 0;
     }
@@ -88,7 +133,7 @@ function organize() {
       "song": song,
       "playerPP": pp.toFixed(2),
       "maxPP": maxPP.toFixed(2),
-      "pp": diff
+      "pp": diff.toFixed(2)
     }
 
     playerList.push(songObj);
@@ -99,7 +144,7 @@ function organize() {
   });
 
   var tableHtml = $("table.playerdata tbody");
-  tableHtml.html("<tr><th style='width:40%'>Song Title</th><th style='width:20%'>Your PP</th><th style='width:20%'>Biggest PP</th><th style='width:20%'>+ PP</th>");
+  tableHtml.html("<tr><th style='width:55%'>Song Title</th><th style='width:15%'>Your PP</th><th style='width:15%'>Biggest PP</th><th style='width:15%'>+ PP</th>");
 
   for (let x = 0; x < playerList.length; x++) {
     var obj = playerList[x];
@@ -121,18 +166,21 @@ function organize() {
 
 function readData(allText) {
   var rows = allText.split(/\r\n|\n/);
-  for (let i = 0; i < 201; i++) {
+  for (let i = 0; i < 100; i++) {
     rows[i] = rows[i].split(",");
     var song = rows[i][0];
     for (let j = 1; j < rows[i].length - 2; j++) {
       song += "," + rows[i][j];
     }
     var songParts = song.split("-");
-    finalSong = songParts[songParts.length-1] + " ";
+    finalSong = songParts[songParts.length - 1] + " ";
     for (let q = 0; q < songParts.length - 1; q++) {
       finalSong += "-" + songParts[q];
     }
     song = $.trim(finalSong);
+    if (song.indexOf("Ange") != -1) {
+      song = "ke-ji feat. Nanahira - Ange du Blanc Pur";
+    }
     song += " " + rows[i][rows[i].length - 1];
     songs[song] = parseFloat(rows[i][rows[i].length - 2]);
     songList.push(song);
