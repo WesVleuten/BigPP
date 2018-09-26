@@ -11,7 +11,7 @@ var count = 0;
 
 $(document).ready(function() {
   $("#loading").hide();
-  $("#playerscores").hide();
+  $(".limiter").hide();
 
   $.ajax({
     type: "GET",
@@ -106,7 +106,7 @@ function organize() {
     if (pp) {
       diff = maxPP - pp;
     } else {
-      pp = 0;
+      pp = "0.00";
     }
 
     if (diff) {
@@ -127,25 +127,23 @@ function organize() {
     return b.pp - a.pp
   });
 
-  var tableHtml = $("table.playerdata tbody");
-  tableHtml.html("<tr><th style='width:55%'>Song Title</th><th style='width:15%'>Your PP</th><th style='width:15%'>Biggest PP</th><th style='width:15%'>+ PP</th>");
-
+  var tableHtml = $('tbody');
   for (let x = 0; x < playerList.length; x++) {
     var obj = playerList[x];
-    var newHtml = "<tr><th>";
+    var newHtml = '<tr class="row100 body"><td class="cell100 column1">';
     newHtml += obj.song;
-    newHtml += "</th><th>";
+    newHtml += '</td><td class="cell100 column2">';
     newHtml += obj.playerPP.toString();
-    newHtml += "</th><th>";
+    newHtml += '</td><td class="cell100 column3">';
     newHtml += obj.maxPP.toString();
-    newHtml += "</th><th>";
+    newHtml += '</td><td class="cell100 column4">';
     newHtml += "+ " + obj.pp.toString();
-    newHtml += "</th></tr>"
+    newHtml += "</td></tr>"
     tableHtml.append(newHtml);
   }
 
   $("#loading").hide();
-  $("#playerscores").show();
+  $(".limiter").show();
 }
 
 function readData(allText) {

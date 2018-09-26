@@ -3,9 +3,11 @@
 
 <head>
   <title>DuoVR PP Enhancement</title>
+
   <link rel="icon" type="image/png" href="images/icons/duovr.ico" />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="js/bigpp.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Karla" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="style.css" media="screen" />
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -24,33 +26,50 @@
 
 <body>
   <center>
-    <h1>Beat Saber PP Enlargement</h1>
-    <h3>Find songs that make your PP bigger!</h3>
+    <div class="title">
+      <h1>Beat Saber PP Enlargement</h1>
+      <h3>Find songs that make your PP bigger!</h3>
+      <h5>Created by <a href="https://www.twitch.tv/duovr">DuoVR</a><a href="https://discordapp.com/invite/Qf6KKzd"> (DuoVR#8205)</a></h5>
+    </div>
     <div>
-      <h5>Created by <a href="https://www.twitch.tv/duovr">DuoVR</a></h5>
-      <h4 id="playerName">ScoreSaber Profile</h4>
+      <h4 id="playerName">Enter Your ScoreSaber Profile:</h4>
       <form>
         <input type="text" class="playerForm" value="https://scoresaber.com/u/76561198006244519">
           </form>
 
-        <button onclick="getData()"><h4>Find Songs!<h4></button>
+        <button onclick="getData()">Find Songs!</button>
     </div>
 
     <div id="loading">
       <span>LOADING SCORES...</span>
     </div>
 
-    <div id="playerscores">
-      <table class="playerdata">
-        <tr>
-          <th>
-            Song
-          </th>
-          <th>
-            PP Increase
-          </th>
-        </tr>
-      </table>
+    <div class="limiter">
+      <div class="container-table100">
+        <div class="wrap-table100">
+          <div class="table100 ver3 m-b-110">
+            <div class="table100-head">
+              <table>
+                <thead>
+                  <tr class="row100 head">
+                    <th class="cell100 column1">Song</th>
+                    <th class="cell100 column2">Your PP</th>
+                    <th class="cell100 column3">Biggest PP</th>
+                    <th class="cell100 column4">PP Growth</th>
+                  </tr>
+                </thead>
+              </table>
+            </div>
+
+            <div class="table100-body js-pscroll ps ps--active-y">
+              <table>
+                <tbody>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </center>
 </body>
