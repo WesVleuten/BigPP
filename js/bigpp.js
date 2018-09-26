@@ -128,6 +128,7 @@ function organize() {
   });
 
   var tableHtml = $('tbody');
+  tableHtml.html("");
   for (let x = 0; x < playerList.length; x++) {
     var obj = playerList[x];
     var newHtml = '<tr class="row100 body"><td class="cell100 column1">';
