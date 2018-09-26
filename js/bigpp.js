@@ -15,7 +15,7 @@ $(document).ready(function() {
 
   $.ajax({
     type: "GET",
-    url: "https://raw.githubusercontent.com/DuoVR/BigPP/master/js/songs.csv",
+    url: "https://raw.githubusercontent.com/DuoVR/PPFarming/master/js/songlist.tsv",
     dataType: "text",
     success: function(data) {
       readData(data);
@@ -56,10 +56,19 @@ function getSongs(callback) {
       var tbody = table.find("tbody");
       tbody.children().each(function() {
         var song = $(this).find("th.song div div a span.songTop.pp").text();
-        song = $.trim(song);
+        var songTitle = song;
+        song = song.split(' ').join('');
+        var chars = song.split("");
+        chars.sort();
+        songChars = chars.join();
         var pp = parseFloat($(this).find("th.score span.scoreTop.ppValue").text());
 
-        player[song] = pp;
+        var songObj = {
+          "song": songTitle,
+          "pp": pp
+        }
+
+        player[songChars] = songObj;
       });
     }).done(function() {
       count++;
@@ -72,51 +81,27 @@ function getSongs(callback) {
 
 function organize() {
   var keys = Object.keys(player);
-  var illness = "";
-  var heaven = "";
-  var ultimate = "";
-  var happy = "";
-  for (let r = 0; r < keys.length; r++) {
-    key = keys[r];
-    if (key.indexOf("HE4VEN") != -1) {
-      heaven = key;
-    }
-    if (key.indexOf("iLLness") != -1) {
-      illness = key;
-    }
-    if (key.indexOf("Mystikmol - Ultimate Ascension") != -1) {
-      ultimate = key;
-    }
-    if (key.indexOf("Mystikmol - Happy Synthesizer") != -1) {
-      happy = key;
-    }
-  }
+
+  console.log(player);
 
   $("#playerName").html(playerName);
 
   for (let i = 0; i < songList.length; i++) {
     var song = songList[i];
 
+    var songTitle = player[song];
+    var pp = 0.00;
+    if (songTitle) {
+      pp = songTitle.pp;
+      songTitle = songTitle.song;
+    } else {
+      songTitle = songs[song].song;
+    }
     var maxPP = songs[song];
-    var pp = player[song];
+    if (maxPP) {
+      maxPP = maxPP.pp;
+    }
     var diff = maxPP;
-
-    if (song.indexOf("HE4VEN") != -1) {
-      song = heaven;
-      pp = player[song];
-    }
-    if (song.indexOf("iLLness") != -1) {
-      song = illness;
-      pp = player[song];
-    }
-    if (song.indexOf("Mystikmol - Ultimate Ascension") != -1) {
-      song = ultimate;
-      pp = player[song];
-    }
-    if (song.indexOf("Mystikmol - Happy Synthesizer") != -1) {
-      song = happy;
-      pp = player[song];
-    }
 
     if (pp) {
       diff = maxPP - pp;
@@ -124,11 +109,15 @@ function organize() {
       pp = 0;
     }
 
+    if (diff) {
+      diff = diff.toFixed(2);
+    }
+
     var songObj = {
-      "song": song,
-      "playerPP": pp.toFixed(2),
-      "maxPP": maxPP.toFixed(2),
-      "pp": diff.toFixed(2)
+      "song": songTitle,
+      "playerPP": pp,
+      "maxPP": maxPP,
+      "pp": diff
     }
 
     playerList.push(songObj);
@@ -162,22 +151,21 @@ function organize() {
 function readData(allText) {
   var rows = allText.split(/\r\n|\n/);
   for (let i = 0; i < 100; i++) {
-    rows[i] = rows[i].split(",");
-    var song = rows[i][0];
-    for (let j = 1; j < rows[i].length - 2; j++) {
-      song += "," + rows[i][j];
+    var row = rows[i].split("\t");
+    var song = row[0];
+    console.log(song);
+    song += " " + row[2];
+    var songTitle = song;
+    song = song.split(' ').join('');
+    var chars = song.split("");
+    chars.sort();
+    song = chars.join();
+    console.log(song);
+    var songObject = {
+      "song": songTitle,
+      "pp": parseFloat(row[1])
     }
-    var songParts = song.split("-");
-    finalSong = songParts[songParts.length - 1] + " ";
-    for (let q = 0; q < songParts.length - 1; q++) {
-      finalSong += "-" + songParts[q];
-    }
-    song = $.trim(finalSong);
-    if (song.indexOf("Ange") != -1) {
-      song = "ke-ji feat. Nanahira - Ange du Blanc Pur";
-    }
-    song += " " + rows[i][rows[i].length - 1];
-    songs[song] = parseFloat(rows[i][rows[i].length - 2]);
+    songs[song] = songObject
     songList.push(song);
   }
 }
