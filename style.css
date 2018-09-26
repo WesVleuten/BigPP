@@ -256,6 +256,10 @@ th, td {
   text-align: center;
 }
 
+.column1 {
+  text-align: left;
+}
+
 .table100.ver3 {
   border-radius: 10px;
   overflow: hidden;
