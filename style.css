@@ -177,12 +177,11 @@ table {
 
 th, td {
   font-weight: unset;
-  padding-right: 10px;
+  padding: 0px 10px;
 }
 
 .column1 {
   width: 55%;
-  padding-left: 40px;
 }
 
 .column2 {
@@ -198,11 +197,13 @@ th, td {
 }
 
 .table100-head th {
+	border-radius: 10px;
   padding-top: 5px;
   padding-bottom: 5px;
 }
 
 .table100-body td {
+	border-radius: 10px;
   padding-top: 5px;
   padding-bottom: 5px;
 }
@@ -226,7 +227,7 @@ th, td {
 }
 
 .table100.ver3 {
-  background-color: #222222;
+  background-color: #141414;
 	font-size: 16px;
 }
 
@@ -236,15 +237,15 @@ th, td {
   color: #0070FF;
   line-height: 1.4;
   text-transform: uppercase;
-  background-color: #272727;
+  background-color: #222222;
   border-style: hidden;
 }
 
 .table100.ver3 td {
   font-family: 'Karla', sans-serif;
-  color: #808080;
+  color: #999999;
   line-height: 1.4;
-  background-color: #222222;
+  background-color: #141414;
   border-style: hidden;
 }
 
@@ -284,7 +285,7 @@ th, td {
   font-family: 'Karla', sans-serif;
   color: #FF3B3B;
   line-height: 1.4;
-  background-color: #272727;
+  background-color: #222222;
 }
 
 .cover {
@@ -302,9 +303,9 @@ button {
   margin: 15px;
   padding: 5px;
   border: none;
-  color: #808080;
+  color: #999999;
   border-radius: 5px;
-  border: 2px solid #808080;
+  border: 2px solid #999999;
   width: 20%;
   max-width: 250px;
 	min-width: 200px;
@@ -312,7 +313,7 @@ button {
 }
 
 button:hover {
-  background-color: #808080;
+  background-color: #999999;
   color: #000000;
 }
 

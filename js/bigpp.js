@@ -138,7 +138,7 @@ function organize() {
     newHtml += '</td><td class="cell100 column3">';
     newHtml += obj.maxPP.toString();
     newHtml += '</td><td class="cell100 column4">';
-    newHtml += "+ " + obj.pp.toString();
+    newHtml += "+" + obj.pp.toString();
     newHtml += "</td></tr>"
     tableHtml.append(newHtml);
   }
