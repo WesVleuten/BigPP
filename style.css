@@ -243,7 +243,7 @@ th, td {
 
 .table100.ver3 td {
   font-family: 'Karla', sans-serif;
-  color: #999999;
+  color: #bbbbbb;
   line-height: 1.4;
   background-color: #141414;
   border-style: hidden;
@@ -303,9 +303,9 @@ button {
   margin: 15px;
   padding: 5px;
   border: none;
-  color: #999999;
+  color: #bbbbbb;
   border-radius: 5px;
-  border: 2px solid #999999;
+  border: 2px solid #bbbbbb;
   width: 20%;
   max-width: 250px;
 	min-width: 200px;
@@ -313,7 +313,7 @@ button {
 }
 
 button:hover {
-  background-color: #999999;
+  background-color: #bbbbbb;
   color: #000000;
 }
 

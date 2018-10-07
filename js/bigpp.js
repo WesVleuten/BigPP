@@ -42,7 +42,7 @@ function getData() {
 }
 
 function getSongs(callback) {
-  for (let i = 1; i < 13; i++) {
+  for (let i = 1; i < 16; i++) {
     var url = $('form input.playerForm').val() + '&page=' + i.toString() + '&sort=1';
 
     $.get(url, function(data) {
@@ -72,7 +72,7 @@ function getSongs(callback) {
       });
     }).done(function() {
       count++;
-      if (count == 12) {
+      if (count == 15) {
         callback();
       }
     });
