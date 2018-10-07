@@ -42,7 +42,7 @@ function getData() {
 }
 
 function getSongs(callback) {
-  for (let i = 1; i < 16; i++) {
+  for (let i = 1; i < 21; i++) {
     var url = $('form input.playerForm').val() + '&page=' + i.toString() + '&sort=1';
 
     $.get(url, function(data) {
@@ -72,7 +72,7 @@ function getSongs(callback) {
       });
     }).done(function() {
       count++;
-      if (count == 15) {
+      if (count == 20) {
         callback();
       }
     });
@@ -149,7 +149,7 @@ function organize() {
 
 function readData(allText) {
   var rows = allText.split(/\r\n|\n/);
-  for (let i = 0; i < 100; i++) {
+  for (let i = 0; i < 160; i++) {
     var row = rows[i].split("\t");
     var song = row[0];
     console.log(song);
