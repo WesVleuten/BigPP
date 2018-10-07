@@ -361,6 +361,11 @@ h3, h4 {
 		padding-left: 10px;
 	}
 
+	th, td {
+	  font-weight: unset;
+	  padding: 0px 5px;
+	}
+
 	.title, .info {
 		font-size: 14px;
 	}
@@ -373,6 +378,11 @@ h3, h4 {
 
 	.column1 {
 		padding-left: 5px;
+	}
+
+	th, td {
+		font-weight: unset;
+		padding: 0px 2px;
 	}
 
 	.title, .info {
