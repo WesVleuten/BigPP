@@ -1,4 +1,5 @@
 var player = {};
+var playerId = null;
 var playerList = [];
 var songs = {};
 var songList = [];
@@ -8,6 +9,8 @@ var newHtml = "";
 var playerName = "Player 1";
 var needPlayer = true;
 var count = 0;
+
+var playerIdPrefix = 'https://scoresaber.com/u/';
 
 $(document).ready(function() {
   $("#loading").hide();
@@ -28,7 +31,45 @@ $(document).ready(function() {
       options.url = http + '//cors-anywhere.herokuapp.com/' + options.url;
     }
   });
+
+  var search = window.location.search; // get search parameters
+  if (search.length > 0) {
+    var parameters = {};
+    var parametersStr = search.slice(1);
+    var keyvaluepairs = parametersStr.split('&');
+    for (var i = 0; i < keyvaluepairs.length; i++) {
+      var keyvalue = keyvaluepairs[i].split('=');
+      if (keyvalue.length != 2) {
+        continue;
+      }
+      parameters[keyvalue[0]] = keyvalue[1];
+    }
+    if (parameters.u) {
+      playerId = parameters.u;
+      $('form input.playerForm').val(playerIdPrefix + playerId);
+      getData();
+    }
+  }
+
 });
+
+function gotoProfile() {
+  var givenUrl = $('form input.playerForm').val();
+
+  var testRegex = /https:\/\/scoresaber.com\/u\/([0-9]*)/g;
+
+  if (!testRegex.test(givenUrl)) {
+    alert('Invalid input');
+    return;
+  }
+
+  var userId = givenUrl.replace('https://scoresaber.com/u/', '');
+
+  var url = window.location.origin;
+  url += window.location.pathname;
+  url += '?u=' + userId;
+  window.location.href = url;
+}
 
 function getData() {
   player = {};
@@ -43,7 +84,7 @@ function getData() {
 
 function getSongs(callback) {
   for (let i = 1; i < 21; i++) {
-    var url = $('form input.playerForm').val() + '&page=' + i.toString() + '&sort=1';
+    var url = playerIdPrefix + playerId + '&page=' + i.toString() + '&sort=1';
 
     $.get(url, function(data) {
       var html = $(data);
@@ -81,8 +122,6 @@ function getSongs(callback) {
 
 function organize() {
   var keys = Object.keys(player);
-
-  console.log(player);
 
   $("#playerName").html(playerName);
 
@@ -152,14 +191,12 @@ function readData(allText) {
   for (let i = 0; i < 160; i++) {
     var row = rows[i].split("\t");
     var song = row[0];
-    console.log(song);
     song += " " + row[2];
     var songTitle = song;
     song = song.split(' ').join('');
     var chars = song.split("");
     chars.sort();
     song = chars.join();
-    console.log(song);
     var songObject = {
       "song": songTitle,
       "pp": parseFloat(row[1])
